@@ -3,18 +3,50 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 /**
  *
  * @author ADMIN
  */
-public class MainFramee extends javax.swing.JFrame {
+public class MainFramee extends JFrame {
+    
 
     /**
      * Creates new form MainFramee
      */
-    public MainFramee() {
-        initComponents();
+    public  MainFramee() {
+        setTitle("Quản Lý Tiệm Giặt Ủi");
+        setSize(700, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JButton btnKhachHang = new JButton("Quản lý Khách Hàng");
+        JButton btnDichVu = new JButton("Quản lý Dịch Vụ");
+        JButton btnDonHang = new JButton("Quản lý Đơn Hàng");
+
+        // Xử lý sự kiện mở các frame giao diện con
+        btnKhachHang.addActionListener(e -> {
+            new KhachHangGui().setVisible(true);
+        });
+
+        btnDichVu.addActionListener(e -> {
+            new DichVuGui().setVisible(true);
+        });
+
+        btnDonHang.addActionListener(e -> {
+            new DonHangGui().setVisible(true);
+        });
+
+        // Layout
+        JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
+        panel.add(btnKhachHang);
+        panel.add(btnDichVu);
+        panel.add(btnDonHang);
+
+        add(panel, BorderLayout.CENTER);
+        
     }
 
     /**
@@ -37,6 +69,7 @@ public class MainFramee extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
 
@@ -85,6 +118,14 @@ public class MainFramee extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem1);
 
+        jMenuItem3.setText("Đơn Hàng");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem3);
+
         jMenuItem2.setText("Dịch Vụ");
         jMenu6.add(jMenuItem2);
 
@@ -113,8 +154,12 @@ public class MainFramee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,6 +195,7 @@ public class MainFramee extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -164,6 +210,7 @@ public class MainFramee extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

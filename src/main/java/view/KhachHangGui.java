@@ -3,20 +3,149 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+import Dao.KhachHangDao;
+import model.KhachHang;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
 /**
  *
  * @author nguye
  */
-public class Form1 extends javax.swing.JFrame {
+public class KhachHangGui extends javax.swing.JFrame {
+    private JTable table;
+    private DefaultTableModel model;
+    private KhachHangDao dao = new KhachHangDao();
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Form1.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(KhachHangGui.class.getName());
 
     /**
      * Creates new form Form1
      */
-    public Form1() {
+    
+    public KhachHangGui() {
         initComponents();
+        setTitle("QUẢN LÝ TIỆM GIẶT ỦI - KHÁCH HÀNG");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        JLabel lblTitle = new JLabel("QUẢN LÝ TIỆM GIẶT ỦI", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 22));
+        lblTitle.setForeground(Color.BLUE);
+        add(lblTitle, BorderLayout.NORTH);
+
+        // Panel nhập thông tin
+        JPanel pnlInput = new JPanel(new GridLayout(3, 2, 5, 5));
+        pnlInput.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
+
+        pnlInput.add(new JLabel("Họ và tên:"));
+        txthoTen = new JTextField();
+        pnlInput.add(txthoTen);
+
+        pnlInput.add(new JLabel("Số điện thoại:"));
+        txtSdt = new JTextField();
+        pnlInput.add(txtSdt);
+
+        pnlInput.add(new JLabel("Địa chỉ:"));
+        txtDiaChi = new JTextField();
+        pnlInput.add(txtDiaChi);
+
+        // Panel nút
+        JPanel pnlButton = new JPanel(new GridLayout(3, 1, 5, 5));
+        JButton btnThem = new JButton("Thêm");
+        JButton btnSua = new JButton("Sửa");
+        JButton btnXoa = new JButton("Xóa");
+
+        pnlButton.add(btnThem);
+        pnlButton.add(btnSua);
+        pnlButton.add(btnXoa);
+
+        JPanel pnlTop = new JPanel(new BorderLayout());
+        pnlTop.add(pnlInput, BorderLayout.CENTER);
+        pnlTop.add(pnlButton, BorderLayout.EAST);
+
+        add(pnlTop, BorderLayout.CENTER);
+
+        // Bảng hiển thị khách hàng
+        model = new DefaultTableModel(new String[]{"Mã KH", "Tên KH", "SĐT", "Địa chỉ"}, 0);
+        table = new JTable(model);
+        add(new JScrollPane(table), BorderLayout.SOUTH);
+
+        // Load dữ liệu ban đầu
+        loadData();
+
+        // Sự kiện nút
+        btnThem.addActionListener(e -> themKhachHang());
+        btnSua.addActionListener(e -> suaKhachHang());
+        btnXoa.addActionListener(e -> xoaKhachHang());
+
+        table.getSelectionModel().addListSelectionListener(e -> hienThiChiTiet());
+    }
+    private void loadData() {
+        model.setRowCount(0);
+        List<KhachHang> list = dao.getAllKhachHang();
+        for (KhachHang kh : list) {
+            model.addRow(new Object[]{kh.getMaKH(), kh.getTenKH(), kh.getSdt(), kh.getDiaChi()});
+        }
+    }
+    private void themKhachHang() {
+        String ten = txthoTen.getText();
+        String sdt = txtSdt.getText();
+        String diaChi = txtDiaChi.getText();
+
+        if (ten.isEmpty() || sdt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        dao.addKhachHang(new KhachHang(0, ten, sdt, diaChi));
+        loadData();
+        clearInput();
+    }
+
+    private void suaKhachHang() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            int maKH = (int) table.getValueAt(row, 0);
+            String hoTen = txthoTen.getText();
+            String sdt = txtSdt.getText();
+            String diaChi = txtDiaChi.getText();
+
+            dao.updateKhachHang(new KhachHang(maKH, hoTen, sdt, diaChi));
+            loadData();
+        }
+    }
+
+    private void xoaKhachHang() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            int maKH = (int) table.getValueAt(row, 0);
+            dao.deleteKhachHang(maKH);
+            loadData();
+            clearInput();
+        }
+    }
+
+    private void hienThiChiTiet() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            txthoTen.setText((String) table.getValueAt(row, 1));
+            txtSdt.setText((String) table.getValueAt(row, 2));
+            txtDiaChi.setText((String) table.getValueAt(row, 3));
+        }
+    }
+
+    private void clearInput() {
+        txthoTen.setText("");
+        txtSdt.setText("");
+        txtDiaChi.setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new KhachHangGui().setVisible(true));
     }
 
     /**
@@ -82,6 +211,11 @@ public class Form1 extends javax.swing.JFrame {
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 0, 51));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 102, 127, 51));
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -116,6 +250,12 @@ public class Form1 extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Địa chỉ");
+
+        txthoTen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txthoTenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,30 +305,17 @@ public class Form1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaActionPerformed
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void txthoTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthoTenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txthoTenActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Form1().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
@@ -211,4 +338,6 @@ public class Form1 extends javax.swing.JFrame {
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txthoTen;
     // End of variables declaration//GEN-END:variables
+
+
 }
