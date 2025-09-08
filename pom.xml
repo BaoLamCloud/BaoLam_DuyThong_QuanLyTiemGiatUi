@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
     <groupId>com.mycompany</groupId>
     <artifactId>XayDungUngDungGiatUi</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <dependencies>
+        <!-- Thư viện AbsoluteLayout cho NetBeans -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE260</version>
         </dependency>
+        
+        <!-- Thư viện MySQL Connector/J để kết nối MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        
+        <!-- Thư viện JDBC Driver cho SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>9.4.1.jre8</version> <!-- Thay phiên bản nếu cần -->
+        </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>XayDungUngDungGiatUi</exec.mainClass>
-    </properties>
+
+<properties>
+    <maven.compiler.source>1.8</maven.compiler.source>   <!-- Hoặc 11 nếu dùng Java 11 -->
+    <maven.compiler.target>1.8</maven.compiler.target>   <!-- Hoặc 11 nếu dùng Java 11 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>8</maven.compiler.release>   <!-- Hoặc 11 nếu dùng Java 11 -->
+</properties>
+
 </project>
