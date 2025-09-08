@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author nguye
  */
 public class DonHangGui extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DonHangGui.class.getName());
 
     /**
@@ -21,12 +21,12 @@ public class DonHangGui extends javax.swing.JFrame {
     public DonHangGui() {
         initComponents();
         // Đổi tên cột bảng
-    jTable2.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {},
-        new String [] {
-            "Ngày nhận", "Dịch vụ", "Số lượng", "Ghi chú"
-        }
-    ));
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Ngày nhận", "Dịch vụ", "Số lượng", "Ghi chú"
+                }
+        ));
     }
 
     /**
@@ -179,41 +179,41 @@ public class DonHangGui extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         int row = jTable2.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa!");
-        return;
-    }
-    jTable2.setValueAt(txtngayNhan.getText(), row, 0);
-    jTable2.setValueAt(txtDichVu.getText(), row, 1);
-    jTable2.setValueAt(txtSoLuong.getText(), row, 2);
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa!");
+            return;
+        }
+        jTable2.setValueAt(txtngayNhan.getText(), row, 0);
+        jTable2.setValueAt(txtDichVu.getText(), row, 1);
+        jTable2.setValueAt(txtSoLuong.getText(), row, 2);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         String ngayNhan = txtngayNhan.getText();
-    String dichVu = txtDichVu.getText();
-    String soLuong = txtSoLuong.getText();
+        String dichVu = txtDichVu.getText();
+        String soLuong = txtSoLuong.getText();
 
-    if (ngayNhan.isEmpty() || dichVu.isEmpty() || soLuong.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
-        return;
-    }
+        if (ngayNhan.isEmpty() || dichVu.isEmpty() || soLuong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
 
-    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-    model.addRow(new Object[]{ngayNhan, dichVu, soLuong});
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.addRow(new Object[]{ngayNhan, dichVu, soLuong});
 
-    txtngayNhan.setText("");
-    txtDichVu.setText("");
-    txtSoLuong.setText("");
+        txtngayNhan.setText("");
+        txtDichVu.setText("");
+        txtSoLuong.setText("");
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         int row = jTable2.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa!");
-        return;
-    }
-    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-    model.removeRow(row);
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa!");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.removeRow(row);
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
