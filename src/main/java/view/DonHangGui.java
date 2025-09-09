@@ -20,6 +20,7 @@ public class DonHangGui extends javax.swing.JFrame {
      */
     public DonHangGui() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         // Đổi tên cột bảng
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},

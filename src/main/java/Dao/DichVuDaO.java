@@ -3,16 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Dao;
-import com.mycompany.xaydungungdunggiatui.DichVu;
 import java.util.ArrayList;
 import java.util.List;
+import model.DichVu;
 
-public class DichVuDao {
+public class DichVuDaO {
 
     private List<DichVu> danhSachDichVu = new ArrayList<>();
     private int nextMaDV = 1;
 
-    public DichVuDao() {
+    public DichVuDaO() {
         // Dữ liệu mẫu
         themDichVu(new DichVu(0, "Giặt khô", 20000, "cái"));
         themDichVu(new DichVu(0, "Giặt ướt", 15000, "cái"));

@@ -3,21 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-import Dao.KhachHangDao;
-import model.KhachHang;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author nguye
  */
 public class KhachHangGui extends javax.swing.JFrame {
-    private JTable table;
     private DefaultTableModel model;
-    private KhachHangDao dao = new KhachHangDao();
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(KhachHangGui.class.getName());
 
     /**
@@ -26,125 +23,14 @@ public class KhachHangGui extends javax.swing.JFrame {
     
     public KhachHangGui() {
         initComponents();
-        setTitle("QUẢN LÝ TIỆM GIẶT ỦI - KHÁCH HÀNG");
-        setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-
-        JLabel lblTitle = new JLabel("QUẢN LÝ TIỆM GIẶT ỦI", SwingConstants.CENTER);
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 22));
-        lblTitle.setForeground(Color.BLUE);
-        add(lblTitle, BorderLayout.NORTH);
-
-        // Panel nhập thông tin
-        JPanel pnlInput = new JPanel(new GridLayout(3, 2, 5, 5));
-        pnlInput.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
-
-        pnlInput.add(new JLabel("Họ và tên:"));
-        txthoTen = new JTextField();
-        pnlInput.add(txthoTen);
-
-        pnlInput.add(new JLabel("Số điện thoại:"));
-        txtSdt = new JTextField();
-        pnlInput.add(txtSdt);
-
-        pnlInput.add(new JLabel("Địa chỉ:"));
-        txtDiaChi = new JTextField();
-        pnlInput.add(txtDiaChi);
-
-        // Panel nút
-        JPanel pnlButton = new JPanel(new GridLayout(3, 1, 5, 5));
-        JButton btnThem = new JButton("Thêm");
-        JButton btnSua = new JButton("Sửa");
-        JButton btnXoa = new JButton("Xóa");
-
-        pnlButton.add(btnThem);
-        pnlButton.add(btnSua);
-        pnlButton.add(btnXoa);
-
-        JPanel pnlTop = new JPanel(new BorderLayout());
-        pnlTop.add(pnlInput, BorderLayout.CENTER);
-        pnlTop.add(pnlButton, BorderLayout.EAST);
-
-        add(pnlTop, BorderLayout.CENTER);
-
-        // Bảng hiển thị khách hàng
-        model = new DefaultTableModel(new String[]{"Mã KH", "Tên KH", "SĐT", "Địa chỉ"}, 0);
-        table = new JTable(model);
-        add(new JScrollPane(table), BorderLayout.SOUTH);
-
-        // Load dữ liệu ban đầu
-        loadData();
-
-        // Sự kiện nút
-        btnThem.addActionListener(e -> themKhachHang());
-        btnSua.addActionListener(e -> suaKhachHang());
-        btnXoa.addActionListener(e -> xoaKhachHang());
-
-        table.getSelectionModel().addListSelectionListener(e -> hienThiChiTiet());
-    }
-    private void loadData() {
-        model.setRowCount(0);
-        List<KhachHang> list = dao.getAllKhachHang();
-        for (KhachHang kh : list) {
-            model.addRow(new Object[]{kh.getMaKH(), kh.getTenKH(), kh.getSdt(), kh.getDiaChi()});
-        }
-    }
-    private void themKhachHang() {
-        String ten = txthoTen.getText();
-        String sdt = txtSdt.getText();
-        String diaChi = txtDiaChi.getText();
-
-        if (ten.isEmpty() || sdt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
-            return;
-        }
-
-        dao.addKhachHang(new KhachHang(0, ten, sdt, diaChi));
-        loadData();
-        clearInput();
-    }
-
-    private void suaKhachHang() {
-        int row = table.getSelectedRow();
-        if (row >= 0) {
-            int maKH = (int) table.getValueAt(row, 0);
-            String hoTen = txthoTen.getText();
-            String sdt = txtSdt.getText();
-            String diaChi = txtDiaChi.getText();
-
-            dao.updateKhachHang(new KhachHang(maKH, hoTen, sdt, diaChi));
-            loadData();
-        }
-    }
-
-    private void xoaKhachHang() {
-        int row = table.getSelectedRow();
-        if (row >= 0) {
-            int maKH = (int) table.getValueAt(row, 0);
-            dao.deleteKhachHang(maKH);
-            loadData();
-            clearInput();
-        }
-    }
-
-    private void hienThiChiTiet() {
-        int row = table.getSelectedRow();
-        if (row >= 0) {
-            txthoTen.setText((String) table.getValueAt(row, 1));
-            txtSdt.setText((String) table.getValueAt(row, 2));
-            txtDiaChi.setText((String) table.getValueAt(row, 3));
-        }
-    }
-
-    private void clearInput() {
-        txthoTen.setText("");
-        txtSdt.setText("");
-        txtDiaChi.setText("");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        String[] columnNames = {"Họ và tên", "Số điện thoại", "Địa chỉ"};
+        model = new DefaultTableModel(columnNames, 0);
+        jTable2.setModel(model);
     }
 
     public static void main(String[] args) {
+        
         SwingUtilities.invokeLater(() -> new KhachHangGui().setVisible(true));
     }
 
@@ -221,6 +107,11 @@ public class KhachHangGui extends javax.swing.JFrame {
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 0, 51));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 222, 127, 51));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -234,11 +125,12 @@ public class KhachHangGui extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane3.setViewportView(jTable2);
 
         jScrollPane4.setViewportView(jScrollPane3);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 684, 192));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 690, 192));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin khách hàng", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
@@ -302,17 +194,49 @@ public class KhachHangGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+       btnSua.addActionListener((ActionEvent e) -> {
+            int row = jTable2.getSelectedRow();
+            if (row != -1) {
+                model.setValueAt(txthoTen.getText(), row, 0);
+                model.setValueAt(txtSdt.getText(), row, 1);
+                model.setValueAt(txtDiaChi.getText(), row, 2);
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa!");
+            }
+        });
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        
+
+            String ten = txthoTen.getText();
+            String sdt = txtSdt.getText();
+            String diaChi = txtDiaChi.getText();
+
+            if (ten.isEmpty() || sdt.isEmpty() || diaChi.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+            model.addRow(new Object[]{ten, sdt, diaChi});
+            clearInput();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void txthoTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthoTenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txthoTenActionPerformed
 
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        btnXoa.addActionListener((ActionEvent e) -> {
+            int row = jTable2.getSelectedRow();
+            if (row != -1) {
+                model.removeRow(row);
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa!");
+            }
+        });
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -339,5 +263,9 @@ public class KhachHangGui extends javax.swing.JFrame {
     private javax.swing.JTextField txthoTen;
     // End of variables declaration//GEN-END:variables
 
-
+private void clearInput() {
+        txthoTen.setText("");
+        txtSdt.setText("");
+        txtDiaChi.setText("");
+    }
 }

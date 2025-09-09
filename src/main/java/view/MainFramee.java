@@ -3,27 +3,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+
 import javax.swing.*;
 import java.awt.*;
+
 /**
  *
  * @author ADMIN
  */
 public class MainFramee extends JFrame {
-    
+
+    private JButton btnKhachHang;
+    private JButton btnThongKe;
+    private JButton btnDichVu;
+    private JButton btnDonHang;    
+
+    private Object role;
 
     /**
      * Creates new form MainFramee
      */
-    public  MainFramee() {
+    public MainFramee() {
+        setTitle("Main Frame");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        JLabel lbl = new JLabel("Chào mừng bạn vào MAIN FORM!", SwingConstants.CENTER);
+        add(lbl);
+
         setTitle("Quản Lý Tiệm Giặt Ủi");
-        setSize(700, 500);
+        setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JButton btnKhachHang = new JButton("Quản lý Khách Hàng");
         JButton btnDichVu = new JButton("Quản lý Dịch Vụ");
         JButton btnDonHang = new JButton("Quản lý Đơn Hàng");
+        JButton btnThongKe = new JButton("Quản lý Doanh Thu");
 
         // Xử lý sự kiện mở các frame giao diện con
         btnKhachHang.addActionListener(e -> {
@@ -37,17 +54,30 @@ public class MainFramee extends JFrame {
         btnDonHang.addActionListener(e -> {
             new DonHangGui().setVisible(true);
         });
+        btnThongKe.addActionListener(e -> {
+            new ThongKeDoanhThuGui().setVisible(true);
+        });
 
         // Layout
-        JPanel panel = new JPanel(new GridLayout(10, 1, 10, 10
-        
-        ));
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.add(btnKhachHang);
         panel.add(btnDichVu);
         panel.add(btnDonHang);
+        panel.add(btnThongKe);
 
         add(panel, BorderLayout.CENTER);
-        
+
+    }
+    public MainFramee(String role) {
+    btnKhachHang = new JButton("Quản lý Khách Hàng");
+    btnDichVu = new JButton("Quản lý Dịch Vụ");
+    btnDonHang = new JButton("Quản lý Đơn Hàng");
+    btnThongKe = new JButton("Quản lý Doanh Thu");
+
+    if (!role.equals("admin")) {
+        btnKhachHang.setVisible(false);
+        btnThongKe.setVisible(false);
+    }
     }
 
     /**
@@ -94,6 +124,7 @@ public class MainFramee extends JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 0, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Hệ thống quản lí tiệm giặt ủi");
+        jLabel1.setEnabled(false);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, -10, 629, 163));
 
         jMenu6.setText("Quản lí thư mục");
@@ -155,7 +186,9 @@ public class MainFramee extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-         SwingUtilities.invokeLater(() -> new MainFramee().setVisible(true));
+        new MainFramee("user").setVisible(true);  // khách hàng
+        new MainFramee("admin").setVisible(true); // admin
+        SwingUtilities.invokeLater(() -> new MainFramee().setVisible(true));
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -186,7 +219,7 @@ public class MainFramee extends JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
