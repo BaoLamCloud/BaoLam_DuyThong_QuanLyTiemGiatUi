@@ -15,15 +15,11 @@ public class KhachHang {
     private String soDienThoai;
     private String diaChi;
 
-    public KhachHang(int maKH, String hoTen, String soDienThoai) {
+    public KhachHang(int maKH, String hoTen, String soDienThoai, String diaChi) {
         this.maKH = maKH;
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
         this.diaChi = diaChi;
-    }
-
-    public KhachHang(int i, String ten, String sdt, String diaChi) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getMaKH() {
@@ -34,19 +30,19 @@ public class KhachHang {
         this.maKH = maKH;
     }
 
-    public String gethoTen() {
+    public String getHoTen() {
         return hoTen;
     }
 
-    public void sethoTen(String tenKH) {
-        this.hoTen = tenKH;
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
     }
 
-    public String getsoDienThoai() {
+    public String getSoDienThoai() {
         return soDienThoai;
     }
 
-    public void setsoDienThoai(String sdt) {
+    public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
     }
 
@@ -57,17 +53,6 @@ public class KhachHang {
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-
-    public Object getTenKH() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Object getSdt() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public int getId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
+    
 }

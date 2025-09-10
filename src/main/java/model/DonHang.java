@@ -46,7 +46,7 @@ public class DonHang {
     public String toString() {
         return "DonHang{" +
                 "id=" + id +
-                ", khachHang=" + khachHang.gethoTen() +
+                ", khachHang=" + khachHang.getHoTen() +
                 ", tongTien=" + tinhTongTien() +
                 ", trangThai='" + trangThai + '\'' +
                 '}';
